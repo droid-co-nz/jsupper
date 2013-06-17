@@ -27,12 +27,15 @@ public class Jsupper {
 
   private Elements elements;
 
+  private Element element;
+
   private Connection.Response response;
 
   /**
    * Constructs with jsoup document.
    * 
-   * @param document jsoup document
+   * @param document
+   *          jsoup document
    */
   public Jsupper(Document document) {
     this.document = document;
@@ -41,16 +44,28 @@ public class Jsupper {
   /**
    * Constructs with jsoup elements.
    * 
-   * @param elements jsoup elements
+   * @param elements
+   *          jsoup elements
    */
   public Jsupper(Elements elements) {
     this.elements = elements;
   }
 
   /**
+   * Constructs with jsoup element.
+   * 
+   * @param element
+   *          jsoup element
+   */
+  public Jsupper(Element element) {
+    this.element = element;
+  }
+
+  /**
    * Constructs with Jsoup response.
    * 
-   * @param response jsoup response
+   * @param response
+   *          jsoup response
    */
   public Jsupper(Connection.Response response) {
     this.parse(response);
@@ -75,11 +90,25 @@ public class Jsupper {
     return this.document;
   }
 
+  public List<Jsupper> each(String query) {
+    List<Jsupper> list = new ArrayList<Jsupper>();
+    Elements elements = this.select(query);
+
+    if (elements != null && elements.size() > 0) {
+      for (Element element : elements) {
+        list.add(new Jsupper(element));
+      }
+    }
+    return list;
+  }
+
   /**
    * Returns list of values converted to given type.
    * 
-   * @param type requested type
-   * @param elements jsoup elements
+   * @param type
+   *          requested type
+   * @param elements
+   *          jsoup elements
    * @return list of requested types
    */
   public static <T> List<T> getList(Class<T> type, Elements elements) {
@@ -97,11 +126,13 @@ public class Jsupper {
   }
 
   /**
-   * Returns specified type using registered converter (gets first found
-   * value). If none of the converters can't handle given type, returns null.
+   * Returns specified type using registered converter (gets first found value). If none of the converters can't handle
+   * given type, returns null.
    * 
-   * @param type requested type
-   * @param elements jsoup elements
+   * @param type
+   *          requested type
+   * @param elements
+   *          jsoup elements
    * @return requested type or null
    */
   public static <T> T getValue(Class<T> type, Elements elements) {
@@ -112,11 +143,12 @@ public class Jsupper {
   }
 
   /**
-   * Returns specified type using registered converter. If none of the
-   * converters can't handle given type, returns null.
+   * Returns specified type using registered converter. If none of the converters can't handle given type, returns null.
    * 
-   * @param type requested type
-   * @param element jsoup element
+   * @param type
+   *          requested type
+   * @param element
+   *          jsoup element
    * @return value requested type or null
    */
   public static <T> T getValue(Class<T> type, Element element) {
@@ -214,7 +246,9 @@ public class Jsupper {
    * @return elements
    */
   public Elements select(String query) {
-    if (this.elements != null) {
+    if (this.element != null) {
+      return this.element.select(query);
+    } else if (this.elements != null) {
       return this.elements.select(query);
     } else {
       return this.document.select(query);
