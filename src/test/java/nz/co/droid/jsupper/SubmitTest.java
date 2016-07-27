@@ -20,7 +20,7 @@ public class SubmitTest {
     Jsupper jsupper = new Jsupper(Jsoup.connect("http://www.google.com/").userAgent("Mozilla").method(Method.GET).execute());
     jsupper.submit("form[name=f]", parameters, "btnG");
 
-    assertEquals(jsupper.getString("#search li cite b"), "jsoup");
+    assertEquals(jsupper.getString("title"), "jsoup - Google Search");
   }
 
 }

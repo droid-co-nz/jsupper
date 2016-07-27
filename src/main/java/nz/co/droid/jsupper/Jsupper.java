@@ -154,7 +154,7 @@ public class Jsupper {
   public static <T> T getValue(Class<T> type, Element element) {
     T value = null;
     try {
-      value = Converter.convert(type, Jsoup.clean(element.text(), Whitelist.none()));
+      value = Converter.convert(type, Jsoup.clean(element.ownText(), Whitelist.none()));
     } catch (Exception e) {
       logger.error("Problem when converting {} to {}", new Object[] { element, type, e });
     }
