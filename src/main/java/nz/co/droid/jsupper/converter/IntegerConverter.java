@@ -23,7 +23,7 @@ public class IntegerConverter implements IConverter<Integer> {
 
     String text = (String) object;
     if (!StringUtil.isBlank(text)) {
-      text = text.replaceAll("[^0-9\\.]", "");
+      text = text.replaceAll("[^0-9\\.-]", "");
       
       if (text.contains(".")) {
         text = text.substring(0, text.indexOf("."));
